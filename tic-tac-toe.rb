@@ -9,4 +9,3 @@ game.choice_sign
 # определяем кто ходит первым
 game.user_begin if game.first_move? == true
 game.computer_begin if game.first_move? == false
-
