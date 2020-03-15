@@ -1,134 +1,40 @@
 class Game
-  def initialize
-    # игровое поле
-    @board = Array.new(9, '-')
-    # символ игрока
-    @user_sign = nil
-    # символ компьютера
-    @computer_sign = nil
-    # возможные ходы
-    @moves = Array(0..8)
-    # условие победы
-    @condition = 0
-    # выигрышные комбинации(матрица решений)
-    @win_combinations = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8],
-      [0, 3, 6], [1, 4, 7], [2, 5, 8],
-      [0, 4, 8], [2, 4, 6]
-    ]
+  attr_accessor :board, :players_tokens, :first_player, :second_player, :judge
+
+  def self.start
+    CommandLine::Display.welcome_banner
+    new(CommandLine::Input.players_choice)
   end
 
-  # рисуем игровое поле
-  def display_board
-    clear
-    puts '   a     b     c'
-    puts '      |     |     '
-    puts "1  #{@board[0]}  |  #{@board[1]}  |  #{@board[2]}  "
-    puts ' _____|_____|_____'
-    puts '      |     |     '
-    puts "2  #{@board[3]}  |  #{@board[4]}  |  #{@board[5]}  "
-    puts ' _____|_____|_____'
-    puts '      |     |     '
-    puts "3  #{@board[6]}  |  #{@board[7]}  |  #{@board[8]}  "
-    puts '      |     |     '
+  def initialize(players_tokens)
+    @board = Board.new
+    @players_tokens = players_tokens
+    @human = Players::Human.new(@players_tokens[0])
+    @computer = Players::Computer.new(@players_tokens[1])
+    @first_player = @human
+    @second_player = @computer
+    @judge = Judge.new
   end
 
-  # выбор x или o
-  def choice_sign
-    while @user_sign != 'o' && @user_sign != 'x' && @user_sign != '0'
-      puts 'Do you want to be X or O?'
-      @user_sign = STDIN.gets.strip.downcase
-    end
-
-    @user_sign = 'o' if @user_sign == '0'
-    @computer_sign = 'o' if @user_sign == 'x'
-    @computer_sign = 'x' if @user_sign == 'o'
-  end
-
-  # определяем кто ходит первым
-  def first_move?
-    @user_sign == 'x'
-  end
-
-  # если игрок ходит первым
-  def user_begin
-    loop do
-      user_move
-      display_board
-      win?
-      break if @condition == 1 || @condition == 2 || @moves == []
-
-      computer_move
-      display_board
-      win?
-      break if @condition == 1 || @condition == 2 || @moves == []
+  # Метод для выбора игрока, который будет ходить первым.
+  #
+  # По умолчанию первым ходит игрок.
+  #
+  # Если игрок выбрал "O", данный метод изменит порядок игроков.
+  def who_goes_first
+    if @players_tokens[0] != 'X'
+      first_player, second_player = @computer, @human
     end
   end
 
-  # если компьютер ходит первым
-  def computer_begin
-    loop do
-      computer_move
-      display_board
-      win?
-      break if @condition == 1 || @condition == 2 || @moves == []
-
-      user_move
-      display_board
-      win?
-      break if @condition == 1 || @condition == 2 || @moves == []
-    end
-  end
-
-  # получаем ход игрока
-  def user_move
-    move = nil
-
-    until (0..8).include?(move)
-      puts 'What is your move? (1-9)'
-      move = STDIN.gets.to_i - 1
-    end
-
-    # проверка хода на валидность
-    if @moves.include? move
-      @moves.delete(move)
-      @board[move] = @user_sign if @board[move] == '-'
+  # todo
+  def make_move(player)
+    move = player.move
+    if !@board.cell_taken?(move)
+      @board.fill_cell(move, player.token)
     else
-      user_move
+      CommandLine::Display.invalid_choice # todo
+      make_move(player)
     end
-  end
-
-  # ход компьютера
-  def computer_move
-    move = rand(0..8)
-
-    # проверка хода на валидность
-    if @moves.include? move
-      @moves.delete(move)
-      @board[move] = @computer_sign if @board[move] == '-'
-    else
-      computer_move
-    end
-  end
-
-  # проверка на выигрыш или на ничью
-  def win?
-    # проверка с помощью матрицы решений
-    @win_combinations.each do |i|
-      if @board[i[0]] == @user_sign && @board[i[1]] == @user_sign && @board[i[2]] == @user_sign
-        @condition = 1
-      end
-      if @board[i[0]] == @computer_sign && @board[i[1]] == @computer_sign && @board[i[2]] == @computer_sign
-        @condition = 2
-      end
-    end
-
-    puts 'User Win!' if @condition == 1
-    puts 'Computer Win!' if @condition == 2
-    puts 'Draw!' if @moves == [] && @condition.zero?
-  end
-
-  def clear
-    system 'clear'
   end
 end
