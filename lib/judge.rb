@@ -1,38 +1,51 @@
+# frozen_string_literal: true
+
 # Класс Judge - судья (проверщик).
-#
-# Проверщик должен содержать метод для определения, что один из игроков победил
-# - построил на поле линию из одинаковых символов по вертикали, горизонтали или диагонали.
-# Метод принимает объект Board для проверки в аргументах.
-
 class Judge
-  attr_accessor :condition
+  attr_reader :board
 
-  WIN_COMBINATIONS = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-  ]
-
-  def initialize
-    # условие победы
-    @condition = 0
+  def initialize(game)
+    @board = game.board.cells
   end
 
-  def win?(board, player)
-    # проверка с помощью матрицы решений
-    WIN_COMBINATIONS.each do |i|
-      if board.cells[i[0]] == player.token &&
-          board.cells[i[1]] == player.token &&
-          board.cells[i[2]] == player.token
-        # @condition = 1 if player.is_a?(Players::Human)
-        # @condition = 2 if player.is_a?(Players::Computer)
-        # @condition = -1 if board.full?
-      end
+  def winning_combination?(player)
+    winning_diagonal?(player) ||
+      winning_horizontal?(player) ||
+      winning_vertical?(player)
+  end
+
+  def winning_diagonal?(player)
+    diagonals.any? do |diagonal|
+      diagonal.all? { |cell| cell == player.token }
     end
+  end
+
+  def winning_horizontal?(player)
+    horizontals.any? do |horizontal|
+      horizontal.all? { |cell| cell == player.token }
+    end
+  end
+
+  def winning_vertical?(player)
+    verticals.any? do |vertical|
+      vertical.all? { |cell| cell == player.token }
+    end
+  end
+
+  def diagonals
+    [[@board[0], @board[4], @board[8]],
+     [@board[2], @board[4], @board[6]]]
+  end
+
+  def horizontals
+    [[@board[0], @board[1], @board[2]],
+     [@board[3], @board[4], @board[5]],
+     [@board[6], @board[7], @board[8]]]
+  end
+
+  def verticals
+    [[@board[0], @board[3], @board[6]],
+     [@board[1], @board[4], @board[7]],
+     [@board[2], @board[5], @board[8]]]
   end
 end

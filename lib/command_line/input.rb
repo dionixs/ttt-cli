@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rainbow'
 
 module CommandLine
@@ -7,7 +9,7 @@ module CommandLine
     # Возвращает массив, в котором:
     # -- буква игрока - первый элемент,
     # -- буква компьютера - второй.
-    def self.players_choice
+    def self.players_tokens
       token = nil
 
       while token != 'X' && token != 'O'
@@ -15,16 +17,16 @@ module CommandLine
         token = get_input.upcase
       end
 
-      token == 'X' ? ['X', 'O'] : ['O', 'X']
+      token == 'X' ? %w[X O] : %w[O X]
     end
 
     def self.get_input
-      print Rainbow(">> ").lawngreen
+      print Rainbow('>> ').lawngreen
       STDIN.gets.strip
     end
 
     def self.clear
-      system "clear" or system "cls"
+      system('clear') || system('cls')
     end
   end
 end

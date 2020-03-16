@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rainbow'
 
 module CommandLine
@@ -18,28 +20,16 @@ module CommandLine
       puts Rainbow("Oops! Sorry, that wasn't a valid response. Try again! \n").red
     end
 
-    def self.play_again
-      puts Rainbow("Would you like to play again?\n").lawngreen
-    end
-
     def self.winner
       puts Rainbow("You Win!\n").deepskyblue
     end
 
-    def self.loser
-      puts Rainbow("You Lose!\n").red
+    def self.draw
+      puts Rainbow("Draw!\n").yellow
     end
 
-    def self.empty_board
-      puts Rainbow("
-      +---+---+---+
-      | - | - | - |
-      +---+---+---+
-      | - | - | - |
-      +---+---+---+
-      | - | - | - |
-      +---+---+---+
-    ").lawngreen
+    def self.loser
+      puts Rainbow("You Lose!\n").red
     end
   end
 end

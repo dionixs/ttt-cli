@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'lib/command_line/display'
 require_relative 'lib/command_line/input'
 require_relative 'lib/board'
@@ -13,41 +15,31 @@ game = Game.start
 # определяем кто ходит первым
 game.who_goes_first
 
-# чистим экран
+# чистка экрана
 CommandLine::Input.clear
-
-# показываем пустое игровое поле
-CommandLine::Display.empty_board
+# вывод игрового поля на экран
+puts game.board
 
 # основной цикл:
 # -- пока поле не заполнилось или один из игроков не победил
 loop do
-  # ход первого игрока
-  game.make_move(game.first_player)
-  # проверка на победу
-  game.judge.win?(game.board, game.first_player)
-  # break if game.judge.condition == 1 ||
-  #     game.judge.condition == 2 ||
-  #     game.judge.condition == -1
-  # вывод игрового поля на экран
-  puts game.board
-
-  # чистим экран
+  # ход текущего игрока
+  game.current_player.move(game.board)
+  # чистка экрана
   CommandLine::Input.clear
-
-  # ход второго игрока
-  game.make_move(game.second_player)
-  # проверка на победу
-  game.judge.win?(game.board, game.second_player)
-  # break if game.judge.condition == 1 ||
-  #     game.judge.condition == 2 ||
-  #     game.judge.condition == -1
   # вывод игрового поля на экран
   puts game.board
+  # проверка ситуации на поле
+  break if game.over?
+  # переключение на следующего игрока
+  game.switch_players
 end
 
 # вывод сообщения о победе/ничье.
-#
-# спросить у игрока, будет ли он играть снова
-#
-# конец
+if game.current_player.name == :human && game.draw?
+  CommandLine::Display.draw
+elsif game.current_player.name == :human && game.won?
+  CommandLine::Display.winner
+else
+  CommandLine::Display.loser
+end

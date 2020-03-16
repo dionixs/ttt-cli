@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rainbow'
 
 # Класс Board - игровое поле.
@@ -17,12 +19,13 @@ class Board
 
   # метод для проверки клетки на занятость
   def cell_taken?(index)
-    @cells[index] != '-'
+    @cells[index] == 'X' || @cells[index] == 'O'
   end
 
+  # метод для проверки всех клеток на занятость
   def full?
-    @cells.all? do |character|
-      if character == 'X' || character == 'O'
+    @cells.all? do |char|
+      if char == 'X' || char == 'O'
         true
       else
         false
@@ -42,4 +45,3 @@ class Board
     ").lawngreen
   end
 end
-
