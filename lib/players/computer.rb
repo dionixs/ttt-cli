@@ -2,20 +2,24 @@
 
 module Players
   class Computer < Player
-    def initialize(token, _name = nil)
-      super(token, name = :computer)
+    def initialize(params)
+      super(params)
+      @game = params[:game]
+      @name = :computer
+      @board = @game.board
+      @ai = AI.new(@game, @enemy, self)
     end
 
     def position
-      rand(0..8)
+      @board.empty_cells.sample
     end
 
-    def move(player = self, board)
-      move = player.position
+    def move(board)
+      move = position
       if !board.cell_taken?(move)
-        board.fill_cell(move, player.token)
+        board.fill_cell(move, @token)
       else
-        player.move(player, board)
+        self.move(board)
       end
     end
   end

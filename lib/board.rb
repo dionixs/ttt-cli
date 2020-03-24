@@ -33,6 +33,17 @@ class Board
     end
   end
 
+  # метод возвращает массив индексов пустых клеток доски
+  def empty_cells
+    @cells.filter_map.with_index do |cell, index|
+      index if cell != 'X' && cell != 'O'
+    end
+  end
+
+  def reset
+    @cells.map { |item| item = "-"}
+  end
+
   def to_s
     Rainbow("
       +---+---+---+
@@ -45,3 +56,5 @@ class Board
     ").lawngreen
   end
 end
+
+

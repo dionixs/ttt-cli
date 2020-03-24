@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
+require 'byebug'
+
 require_relative 'lib/command_line/display'
 require_relative 'lib/command_line/input'
 require_relative 'lib/board'
+require_relative 'lib/ai'
 require_relative 'lib/player'
 require_relative 'lib/players/computer'
 require_relative 'lib/players/human'

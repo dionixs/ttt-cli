@@ -2,8 +2,9 @@
 
 module Players
   class Human < Player
-    def initialize(token, _name = nil)
-      super(token, name = :human)
+    def initialize(params)
+      super(params)
+      @name = :human
     end
 
     def position
@@ -11,13 +12,13 @@ module Players
       CommandLine::Input.get_input.to_i - 1
     end
 
-    def move(player = self, board)
-      move = player.position
+    def move(board)
+      move = position
       if !board.cell_taken?(move)
-        board.fill_cell(move, player.token)
+        board.fill_cell(move, @token)
       else
         CommandLine::Display.invalid_choice
-        player.move(player, board)
+        self.move(board)
       end
     end
   end

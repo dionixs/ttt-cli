@@ -2,7 +2,7 @@
 
 # Класс Game: Управляет игровым процессом
 class Game
-  attr_reader :board, :current_player
+  attr_reader :board, :current_player, :judge
 
   def self.start
     CommandLine::Display.welcome_banner
@@ -11,9 +11,12 @@ class Game
 
   def initialize(tokens)
     @board = Board.new
-    @tokens = tokens
-    @human = Players::Human.new(@tokens[0])
-    @computer = Players::Computer.new(@tokens[1])
+    @human = Players::Human.new(token: tokens[0])
+    @computer = Players::Computer.new(
+        token: tokens[1],
+        game: self,
+        enemy: @human
+    )
     @first_player = @human
     @second_player = @computer
     @current_player = @human
@@ -26,7 +29,7 @@ class Game
   #
   # Если игрок выбрал "O", данный метод изменит порядок игроков.
   def who_goes_first
-    if @tokens[0] != 'X'
+    if @human.token != 'X'
       @first_player = @computer
       @second_player = @human
     end
@@ -49,7 +52,7 @@ class Game
     @board.full? && !won?
   end
 
-  def won?
-    @judge.winning_combination?(@current_player)
+  def won?(player = @current_player)
+    @judge.winning_combination?(player)
   end
 end

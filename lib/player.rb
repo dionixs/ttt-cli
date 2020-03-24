@@ -2,14 +2,14 @@
 
 # Класс Player (abstract class)
 class Player
-  attr_reader :token, :name
+  attr_reader :board, :token, :name, :enemy
 
-  def initialize(token, name = nil)
-    @token = token
-    @name = name
+  def initialize(params)
+    @token = params[:token]
+    @enemy = params[:enemy]
   end
 
   def position; end
 
-  def move(player = self, board); end
+  def move(board); end
 end
