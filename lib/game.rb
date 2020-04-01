@@ -17,8 +17,6 @@ class Game
         game: self,
         enemy: @human
     )
-    @first_player = @human
-    @second_player = @computer
     @current_player = @human
     @judge = Judge.new(self)
   end
@@ -30,8 +28,7 @@ class Game
   # Если игрок выбрал "O", данный метод изменит порядок игроков.
   def who_goes_first
     if @human.token != 'X'
-      @first_player = @computer
-      @second_player = @human
+      @current_player = @computer
     end
   end
 

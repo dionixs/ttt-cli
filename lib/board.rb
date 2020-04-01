@@ -40,8 +40,9 @@ class Board
     end
   end
 
-  def reset
-    @cells.map { |item| item = "-"}
+  # метод для очистки клетки
+  def reset_cell(index)
+    @cells[index] = "-"
   end
 
   def to_s
