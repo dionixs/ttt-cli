@@ -5,7 +5,6 @@ require 'rainbow'
 module CommandLine
   class Input
     # Метод для выбора X или O
-    #
     # Возвращает массив, в котором:
     # -- буква игрока - первый элемент,
     # -- буква компьютера - второй.
@@ -23,10 +22,6 @@ module CommandLine
     def self.get_input
       print Rainbow('>> ').lawngreen
       STDIN.gets.strip
-    end
-
-    def self.clear
-      system('clear') || system('cls')
     end
   end
 end

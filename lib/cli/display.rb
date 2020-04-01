@@ -31,5 +31,10 @@ module CommandLine
     def self.loser
       puts Rainbow("You Lose!\n").red
     end
+
+    def self.print_board(board)
+      system('clear') || system('cls')
+      puts board
+    end
   end
 end
