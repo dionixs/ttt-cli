@@ -52,4 +52,15 @@ class Game
   def won?(player = @current_player)
     @judge.winning_combination?(player)
   end
+
+  # метод для объявления победителя
+  def over_message
+    if draw?
+      CommandLine::Display.draw
+    elsif won?(@human)
+      CommandLine::Display.winner
+    elsif won?(@computer)
+      CommandLine::Display.loser
+    end
+  end
 end

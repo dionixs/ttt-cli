@@ -2,8 +2,8 @@
 
 require 'byebug'
 
-require_relative 'lib/command_line/display'
-require_relative 'lib/command_line/input'
+require_relative 'lib/cli/display'
+require_relative 'lib/cli/input'
 require_relative 'lib/board'
 require_relative 'lib/ai'
 require_relative 'lib/player'
@@ -15,23 +15,22 @@ require_relative 'lib/game'
 # старт
 game = Game.start
 
+# игровое поле
+board = game.board
+
 # определяем кто ходит первым
 game.who_goes_first
 
-# чистка экрана
-CommandLine::Input.clear
 # вывод игрового поля на экран
-puts game.board
+CommandLine::Display.print_board(board)
 
 # основной цикл:
 # -- пока поле не заполнилось или один из игроков не победил
 loop do
   # ход текущего игрока
-  game.current_player.move(game.board)
-  # чистка экрана
-  CommandLine::Input.clear
+  game.current_player.move(board)
   # вывод игрового поля на экран
-  puts game.board
+  CommandLine::Display.print_board(board)
   # проверка ситуации на поле
   break if game.over?
   # переключение на следующего игрока
@@ -39,10 +38,4 @@ loop do
 end
 
 # вывод сообщения о победе/ничье.
-if game.current_player.name == :human && game.draw?
-  CommandLine::Display.draw
-elsif game.current_player.name == :human && game.won?
-  CommandLine::Display.winner
-else
-  CommandLine::Display.loser
-end
+game.over_message
