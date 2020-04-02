@@ -3,7 +3,8 @@
 
 # Run
 ```
-ruby tic-tac-toe.rb
+bundle install
+bundle exec ruby tic-tac-toe.rb 
 ```
 
 # Requirements
