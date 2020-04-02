@@ -11,15 +11,18 @@ module Players
     end
 
     def position
-      @ai.minimax(@board, self)
-      @ai.best_move
-      # @board.empty_cells.sample
+      if @board.empty_cells.size == 9
+        @board.empty_cells.sample
+      else
+        @ai.minimax(@board, self)
+        @ai.best_move
+      end
     end
 
     def move(board)
-      move = position
-      if !board.cell_taken?(move)
-        board.fill_cell(move, @token)
+      index = position
+      if !board.cell_taken?(index)
+        board.fill_cell(index, @token)
       end
     end
   end

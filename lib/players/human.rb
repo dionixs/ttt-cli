@@ -13,9 +13,9 @@ module Players
     end
 
     def move(board)
-      move = position
-      if !board.cell_taken?(move)
-        board.fill_cell(move, @token)
+      index = position
+      if !board.cell_taken?(index)
+        board.fill_cell(index, @token)
       else
         CommandLine::Display.invalid_choice
         self.move(board)
