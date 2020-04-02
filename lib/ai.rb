@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AI
   attr_reader :best_move
 
@@ -22,7 +24,7 @@ class AI
 
     # проверка на терминальное состояние
     return 10 - depth if @game.won?(@computer)
-    return (-10) + depth if @game.won?(@enemy)
+    return -10 + depth if @game.won?(@enemy)
     return 0 if @game.draw?
 
     empty_indices.each do |index|
@@ -37,6 +39,7 @@ class AI
   end
 
   private
+
   # метод для оценки полученных значений
   # возвращает наилучшее значение
   def minimax_score(moves, player)

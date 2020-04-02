@@ -18,7 +18,7 @@ module Players
         board.fill_cell(index, @token)
       else
         CommandLine::Display.invalid_choice
-        self.move(board)
+        move(board)
       end
     end
   end

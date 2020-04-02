@@ -21,9 +21,7 @@ module Players
 
     def move(board)
       index = position
-      if !board.cell_taken?(index)
-        board.fill_cell(index, @token)
-      end
+      board.fill_cell(index, @token) unless board.cell_taken?(index)
     end
   end
 end

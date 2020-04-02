@@ -22,19 +22,18 @@ class Game
   end
 
   # Метод для выбора игрока, который будет ходить первым.
-  #
   # По умолчанию первым ходит игрок.
-  #
-  # Если игрок выбрал "O", данный метод изменит порядок игроков.
   def who_goes_first
-    if @human.token != 'X'
+    case @human.token
+    when 'O'
       @current_player = @computer
     end
   end
 
   # Метод для переключения на следующего игрока
   def switch_players
-    if @current_player == @human
+    case @current_player
+    when @human
       @current_player = @computer
     else
       @current_player = @human

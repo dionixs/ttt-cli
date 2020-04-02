@@ -33,6 +33,7 @@ loop do
   CommandLine::Display.print_board(board)
   # проверка ситуации на поле
   break if game.over?
+
   # переключение на следующего игрока
   game.switch_players
 end

@@ -42,7 +42,7 @@ class Board
 
   # метод для очистки клетки
   def reset_cell(index)
-    @cells[index] = "-"
+    @cells[index] = '-'
   end
 
   def to_s
@@ -57,5 +57,3 @@ class Board
     ").lawngreen
   end
 end
-
-

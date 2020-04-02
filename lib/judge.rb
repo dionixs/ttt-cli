@@ -5,10 +5,10 @@ class Judge
   attr_reader :board
 
   WIN_COMBINATIONS = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8],
-      [0, 3, 6], [1, 4, 7], [2, 5, 8],
-      [0, 4, 8], [2, 4, 6]
-  ]
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ].freeze
 
   def initialize(game)
     @board = game.board.cells
@@ -17,7 +17,7 @@ class Judge
   # основной метод для проверки на выигрыш
   # возвращает true если обнаружена выигрышная комбинация
   def is_combo?(player)
-    if winning_combination(player) != nil
+    if !winning_combination(player).nil?
       true
     else
       false

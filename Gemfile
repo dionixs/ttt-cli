@@ -2,5 +2,5 @@
 
 source 'https://rubygems.org'
 
-gem 'rainbow'
 gem 'byebug'
+gem 'rainbow'
