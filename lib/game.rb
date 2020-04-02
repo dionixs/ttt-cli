@@ -50,7 +50,7 @@ class Game
   end
 
   def won?(player = @current_player)
-    @judge.winning_combination?(player)
+    @judge.is_combo?(player)
   end
 
   # метод для объявления победителя

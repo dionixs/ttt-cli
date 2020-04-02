@@ -4,48 +4,37 @@
 class Judge
   attr_reader :board
 
+  WIN_COMBINATIONS = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+  ]
+
   def initialize(game)
     @board = game.board.cells
   end
 
-  def winning_combination?(player)
-    winning_diagonal?(player) ||
-      winning_horizontal?(player) ||
-      winning_vertical?(player)
-  end
-
-  def winning_diagonal?(player)
-    diagonals.any? do |diagonal|
-      diagonal.all? { |cell| cell == player.token }
+  # основной метод для проверки на выигрыш
+  # возвращает true если обнаружена выигрышная комбинация
+  def is_combo?(player)
+    if winning_combination(player) != nil
+      true
+    else
+      false
     end
   end
 
-  def winning_horizontal?(player)
-    horizontals.any? do |horizontal|
-      horizontal.all? { |cell| cell == player.token }
+  private
+
+  # метод который возвращает первую подходящую комбинацию
+  # или nil если не было совпадения
+  def winning_combination(player)
+    WIN_COMBINATIONS.find do |indices|
+      # возвращаем значения для соответствующих индексов
+      # values_at(*[0,1,2]) => values_at(0,1,2)
+      values = @board.values_at(*indices)
+      # проверяем, равны ли все значения X или O
+      values.all?(player.token)
     end
-  end
-
-  def winning_vertical?(player)
-    verticals.any? do |vertical|
-      vertical.all? { |cell| cell == player.token }
-    end
-  end
-
-  def diagonals
-    [[@board[0], @board[4], @board[8]],
-     [@board[2], @board[4], @board[6]]]
-  end
-
-  def horizontals
-    [[@board[0], @board[1], @board[2]],
-     [@board[3], @board[4], @board[5]],
-     [@board[6], @board[7], @board[8]]]
-  end
-
-  def verticals
-    [[@board[0], @board[3], @board[6]],
-     [@board[1], @board[4], @board[7]],
-     [@board[2], @board[5], @board[8]]]
   end
 end
