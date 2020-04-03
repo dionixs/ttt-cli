@@ -8,8 +8,10 @@ require 'rainbow'
 class Board
   attr_accessor :cells
 
+  include Emoji
+
   def initialize
-    @cells = Array.new(9, '-')
+    @cells = Array.new(9, DASH)
   end
 
   # метод для заполнения клетки
@@ -19,13 +21,13 @@ class Board
 
   # метод для проверки клетки на занятость
   def cell_taken?(index)
-    @cells[index] == 'X' || @cells[index] == 'O'
+    @cells[index] == X || @cells[index] == O
   end
 
   # метод для проверки всех клеток на занятость
   def full?
     @cells.all? do |char|
-      if char == 'X' || char == 'O'
+      if char == X || char == O
         true
       else
         false
@@ -36,24 +38,31 @@ class Board
   # метод возвращает массив индексов пустых клеток доски
   def empty_cells
     @cells.filter_map.with_index do |cell, index|
-      index if cell != 'X' && cell != 'O'
+      index if cell != X && cell != O
     end
   end
 
   # метод для очистки клетки
   def reset_cell(index)
-    @cells[index] = '-'
+    @cells[index] = DASH
   end
 
   def to_s
     Rainbow("
-      +---+---+---+
-      | #{@cells[0]} | #{@cells[1]} | #{@cells[2]} |
-      +---+---+---+
-      | #{@cells[3]} | #{@cells[4]} | #{@cells[5]} |
-      +---+---+---+
-      | #{@cells[6]} | #{@cells[7]} | #{@cells[8]} |
-      +---+---+---+
+    +---------------+
+    |  Tic Tac Toe  |
+    +---------------+
+
+        |      |
+    #{@cells[0]}  |  #{@cells[1]}  |  #{@cells[2]}
+  ______|______|______
+        |      |
+    #{@cells[3]}  |  #{@cells[4]}  |  #{@cells[5]}
+  ______|______|______
+        |      |
+    #{@cells[6]}  |  #{@cells[7]}  |  #{@cells[8]}
+        |      |
+
     ").lawngreen
   end
 end
