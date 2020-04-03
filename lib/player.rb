@@ -3,10 +3,11 @@
 # Класс Player (abstract class)
 class Player
   attr_reader :board, :token, :name, :enemy
+  include Emoji
 
   def initialize(params)
+    @name = params[:name]
     @token = params[:token]
-    @enemy = params[:enemy]
   end
 
   def position; end

@@ -7,6 +7,7 @@ module Players
       @game = params[:game]
       @name = :computer
       @board = @game.board
+      @enemy = @game.human
       @ai = AI.new(@game, @enemy, self)
     end
 

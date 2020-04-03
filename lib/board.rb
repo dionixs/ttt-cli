@@ -7,11 +7,11 @@ require 'rainbow'
 # По умолчанию имеет размер 3х3.
 class Board
   attr_accessor :cells
-
   include Emoji
 
-  def initialize
+  def initialize(game)
     @cells = Array.new(9, DASH)
+    @game = game
   end
 
   # метод для заполнения клетки
@@ -50,7 +50,7 @@ class Board
   def to_s
     Rainbow("
     +---------------+
-    |  Tic Tac Toe  |
+    |  Tic-Tac-Toe  |
     +---------------+
 
         |      |
@@ -63,6 +63,8 @@ class Board
     #{@cells[6]}  |  #{@cells[7]}  |  #{@cells[8]}
         |      |
 
+  Human   Tie   Computer
+    #{@game.wins}      #{@game.draws}       #{@game.losses}
     ").lawngreen
   end
 end

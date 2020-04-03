@@ -5,6 +5,7 @@ require 'rainbow'
 module CommandLine
   class Display
     def self.welcome_banner
+      system('clear') || system('cls')
       puts Rainbow("Welcome to Tic Tac Toe!\n").lawngreen
     end
 
@@ -21,15 +22,19 @@ module CommandLine
     end
 
     def self.winner
-      puts Rainbow("You Win!\n").deepskyblue
+      puts Rainbow("\tYou Win!\n").deepskyblue
     end
 
     def self.draw
-      puts Rainbow("Draw!\n").yellow
+      puts Rainbow("\tDraw!\n").yellow
+    end
+
+    def self.play_again
+      puts Rainbow("Would you to play again? (y/n)\n").lawngreen
     end
 
     def self.loser
-      puts Rainbow("You Lose!\n").red
+      puts Rainbow("\tYou Lose!\n").red
     end
 
     def self.print_board(board)
