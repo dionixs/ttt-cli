@@ -4,6 +4,8 @@ require 'rainbow'
 
 module CommandLine
   class Input
+
+    include Emoji
     # Метод для выбора X или O
     # Возвращает массив, в котором:
     # -- буква игрока - первый элемент,
@@ -16,7 +18,7 @@ module CommandLine
         token = get_input.upcase
       end
 
-      token == 'X' ? %w[X O] : %w[O X]
+      token == 'X' ? [X, O] : [O, X]
     end
 
     def self.get_input

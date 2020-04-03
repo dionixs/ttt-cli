@@ -4,6 +4,7 @@ require 'byebug'
 
 require_relative 'lib/cli/display'
 require_relative 'lib/cli/input'
+require_relative 'lib/emoji'
 require_relative 'lib/board'
 require_relative 'lib/ai'
 require_relative 'lib/player'
