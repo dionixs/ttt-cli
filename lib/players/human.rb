@@ -2,24 +2,21 @@
 
 module Players
   class Human < Player
-    def initialize(params)
-      super(params)
-      @name = :human
+    def make_move(board)
+      move = position
+      if !board.cell_taken?(move)
+        board.fill_cell(move, @token)
+      else
+        CommandLine::Display.invalid_choice
+        make_move(board)
+      end
     end
+
+    private
 
     def position
       CommandLine::Display.choose_cell
       CommandLine::Input.get_input.to_i - 1
-    end
-
-    def move(board)
-      index = position
-      if !board.cell_taken?(index)
-        board.fill_cell(index, @token)
-      else
-        CommandLine::Display.invalid_choice
-        move(board)
-      end
     end
   end
 end

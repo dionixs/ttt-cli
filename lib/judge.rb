@@ -17,11 +17,7 @@ class Judge
   # основной метод для проверки на выигрыш
   # возвращает true если обнаружена выигрышная комбинация
   def is_combo?(player)
-    if !winning_combination(player).nil?
-      true
-    else
-      false
-    end
+    !winning_combination(player).nil?
   end
 
   private

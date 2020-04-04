@@ -2,8 +2,16 @@
 
 # Класс Game: Управляет игровым процессом
 class Game
-  attr_reader :board, :human, :current_player, :judge
   include Emoji
+
+  attr_accessor :difficulty
+  attr_reader :board, :human, :computer, :current_player
+
+  DIFFICULTY_LEVELS = {
+      easy: RandomAI,
+      medium: MediumAI,
+      hard: HardAI
+  }.freeze
 
   @@draws = 0
   @@wins = 0
@@ -11,31 +19,45 @@ class Game
 
   def self.start
     CommandLine::Display.welcome_banner
-    new_game = new(Game.set_players_tokens)
+    new_game = new
+    new_game.set_players_tokens
     new_game.who_goes_first
     CommandLine::Display.print_board(new_game.board)
     new_game
   end
 
-  def initialize(players)
+  def initialize
     @board = Board.new(self)
-    @human = Players::Human.new(token: players[0])
-    @computer = Players::Computer.new(token: players[1], game: self)
+    @difficulty = Game.get_difficulty_level
+    @human = Players::Human.new(token: X)
+    @computer = Players::Computer.new(token: O, game: self)
     @current_player = @human
     @judge = Judge.new(self)
   end
 
   def start_new_game?
-    play_again == 'y' ? true : false
+    play_again == 'y'
+  end
+
+  def self.get_difficulty_level(level = nil)
+    until (1..3).include?(level)
+      CommandLine::Display.difficulty
+      level = CommandLine::Input.get_input.to_i
+    end
+    DIFFICULTY_LEVELS.values[level.to_i - 1]
   end
 
   # Метод который устанавливает символы игрокам
-  def self.set_players_tokens
-    get_user_token == 'X' ? [X, O] : [O, X]
+  # По умолчанию игрок - X, компьютер - O
+  def set_players_tokens
+    if get_user_token != 'X'
+      @human.token = O
+      @computer.token = X
+    end
   end
 
   # Метод для получения символа игрока
-  def self.get_user_token(token = nil)
+  def get_user_token(token = nil)
     while token != 'X' && token != 'O'
       CommandLine::Display.choose_token
       token = CommandLine::Input.get_input.upcase
@@ -86,15 +108,12 @@ class Game
   def over_message # todo
     if draw?
       @@draws += 1
-      CommandLine::Display.print_board(board)
       CommandLine::Display.draw
     elsif won?(@human)
       @@wins += 1
-      CommandLine::Display.print_board(board)
       CommandLine::Display.winner
     elsif won?(@computer)
       @@losses += 1
-      CommandLine::Display.print_board(board)
       CommandLine::Display.loser
     end
   end

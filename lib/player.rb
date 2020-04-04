@@ -2,15 +2,15 @@
 
 # Класс Player (abstract class)
 class Player
-  attr_reader :board, :token, :name, :enemy
+  attr_accessor :board, :token, :name, :enemy
+
   include Emoji
 
   def initialize(params)
-    @name = params[:name]
     @token = params[:token]
   end
 
-  def position; end
+  def make_move(board); end # todo
 
-  def move(board); end
+  def position; end
 end

@@ -7,6 +7,7 @@ require 'rainbow'
 # По умолчанию имеет размер 3х3.
 class Board
   attr_accessor :cells
+
   include Emoji
 
   def initialize(game)
@@ -40,6 +41,11 @@ class Board
     @cells.filter_map.with_index do |cell, index|
       index if cell != X && cell != O
     end
+  end
+
+  # метод возвращает массив четных индексов клеток доски
+  def even_cells
+    empty_cells.filter { |cell| cell.even? }
   end
 
   # метод для очистки клетки

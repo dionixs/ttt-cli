@@ -7,6 +7,9 @@ require_relative 'lib/cli/display'
 require_relative 'lib/cli/input'
 require_relative 'lib/board'
 require_relative 'lib/ai'
+require_relative 'lib/strategies/random_ai'
+require_relative 'lib/strategies/medium_ai'
+require_relative 'lib/strategies/hard_ai'
 require_relative 'lib/player'
 require_relative 'lib/players/computer'
 require_relative 'lib/players/human'
@@ -15,6 +18,7 @@ require_relative 'lib/game'
 
 # Cтарт новой игры:
 # - Выводим приветственный текст
+# - Устанавливаем уровень сложности игры
 # - Устанавливаем символы игрокам
 # - Определяем кто ходит первым
 # - Выводим игровое поле на экран
@@ -24,7 +28,7 @@ game = Game.start
 # -- пока поле не заполнилось или один из игроков не победил
 loop do
   # ход текущего игрока
-  game.current_player.move(game.board)
+  game.current_player.make_move(game.board)
   # вывод игрового поля на экран
   CommandLine::Display.print_board(game.board)
 
@@ -33,7 +37,8 @@ loop do
     # вывод сообщения о победе/ничье.
     game.over_message
     # спрашиваем игрока, хочет ли он сыграть еще
-    if game.start_new_game? # todo
+    if game.start_new_game?
+      # создаем новую игру
       game = Game.start
       next
     else
