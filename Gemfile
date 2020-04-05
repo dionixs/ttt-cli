@@ -4,3 +4,4 @@ source 'https://rubygems.org'
 
 gem 'byebug'
 gem 'rainbow'
+gem 'tty-prompt'

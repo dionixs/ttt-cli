@@ -7,7 +7,6 @@ module Players
       if !board.cell_taken?(move)
         board.fill_cell(move, @token)
       else
-        CommandLine::Display.invalid_choice
         make_move(board)
       end
     end
@@ -15,8 +14,8 @@ module Players
     private
 
     def position
-      CommandLine::Display.choose_cell
-      CommandLine::Input.get_input.to_i - 1
+      index = CommandLine::Display.choose_cell
+      index.to_i - 1
     end
   end
 end

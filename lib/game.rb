@@ -36,15 +36,12 @@ class Game
   end
 
   def start_new_game?
-    play_again == 'y'
+    CommandLine::Display.play_again
   end
 
-  def self.get_difficulty_level(level = nil)
-    until (1..3).include?(level)
-      CommandLine::Display.difficulty
-      level = CommandLine::Input.get_input.to_i
-    end
-    DIFFICULTY_LEVELS.values[level.to_i - 1]
+  def self.get_difficulty_level
+    level = CommandLine::Display.difficulty
+    DIFFICULTY_LEVELS[level.to_sym]
   end
 
   # Метод который устанавливает символы игрокам
@@ -57,12 +54,8 @@ class Game
   end
 
   # Метод для получения символа игрока
-  def get_user_token(token = nil)
-    while token != 'X' && token != 'O'
-      CommandLine::Display.choose_token
-      token = CommandLine::Input.get_input.upcase
-    end
-    token
+  def get_user_token
+    CommandLine::Display.choose_token
   end
 
   # Метод для выбора игрока, который будет ходить первым.
@@ -96,24 +89,19 @@ class Game
     @judge.is_combo?(player)
   end
 
-  def play_again(choice = nil)
-    while choice != 'y' && choice != 'n'
-      CommandLine::Display.play_again
-      choice = CommandLine::Input.get_input.downcase
-    end
-    choice
-  end
-
   # Метод для объявления победителя
   def over_message # todo
     if draw?
       @@draws += 1
+      CommandLine::Display.print_board(board)
       CommandLine::Display.draw
     elsif won?(@human)
       @@wins += 1
+      CommandLine::Display.print_board(board)
       CommandLine::Display.winner
     elsif won?(@computer)
       @@losses += 1
+      CommandLine::Display.print_board(board)
       CommandLine::Display.loser
     end
   end
