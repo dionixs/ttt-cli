@@ -4,7 +4,7 @@ require 'tty-prompt'
 module CommandLine
   class Display
     def self.prompt
-      TTY::Prompt.new
+      TTY::Prompt.new(interrupt: :exit)
     end
 
     def self.welcome_banner
