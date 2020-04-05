@@ -8,9 +8,9 @@ class Game
   attr_reader :board, :human, :computer, :current_player
 
   DIFFICULTY_LEVELS = {
-      easy: RandomAI,
-      medium: MediumAI,
-      hard: HardAI
+    easy: RandomAI,
+    medium: MediumAI,
+    hard: HardAI
   }.freeze
 
   @@draws = 0

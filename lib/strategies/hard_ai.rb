@@ -1,4 +1,25 @@
+# frozen_string_literal: true
+
 class HardAI < AI
+  attr_accessor :best_move
+
+  def initialize(game, computer)
+    super(game, computer)
+    @best_move = nil
+  end
+
+  def move_generate
+    if @board.empty_cells.size == 9 ||
+       @board.empty_cells.size == 8
+      @board.even_cells.sample
+    else
+      minimax(@board, @computer)
+      @best_move
+    end
+  end
+
+  private
+
   # основная минимакс-функция
   # возвращает значение, если найдено конечное состояние(+10, 0, -10)
   # проходит по всем пустым клеткам на поле
@@ -26,8 +47,6 @@ class HardAI < AI
     # возвращаем наилучшее значение
     minimax_score(moves, player)
   end
-
-  private
 
   # метод для оценки полученных значений
   # возвращает наилучшее значение

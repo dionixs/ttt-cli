@@ -45,7 +45,12 @@ class Board
 
   # метод возвращает массив четных индексов клеток доски
   def even_cells
-    empty_cells.filter { |cell| cell.even? }
+    empty_cells.filter(&:even?)
+  end
+
+  # метод возвращает массив нечетных индексов клеток доски
+  def odd_cells
+    empty_cells.filter(&:odd?)
   end
 
   # метод для очистки клетки

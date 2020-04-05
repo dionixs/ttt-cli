@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
 class AI
-  attr_accessor :best_move
-
-  def self.create(game, enemy, computer, type)
-    type.new(game, enemy, computer)
+  def self.create(game, type, computer)
+    type.new(game, computer)
   end
 
-  def initialize(game, enemy, computer)
+  def initialize(game, computer)
     @game = game
+    @board = game.board
     @computer = computer
-    @enemy = enemy
-    @best_move = nil
+    @enemy = @game.human
   end
 
-  def move_generate(board); end
+  # Метод для генерации хода AI
+  def move_generate; end
 end
