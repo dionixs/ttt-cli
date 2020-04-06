@@ -1,17 +1,10 @@
 # frozen_string_literal: true
 
+require 'yaml'
+
 # Класс Game: Управляет игровым процессом
-class Game
-  include Emoji
-
-  attr_accessor :difficulty
+class Game < Engine
   attr_reader :board, :human, :computer, :current_player
-
-  DIFFICULTY_LEVELS = {
-    easy: RandomAI,
-    medium: MediumAI,
-    hard: HardAI
-  }.freeze
 
   @@draws = 0
   @@wins = 0
@@ -28,7 +21,7 @@ class Game
 
   def initialize
     @board = Board.new(self)
-    @difficulty = Game.get_difficulty_level
+    @difficulty = Game.difficulty_level
     @human = Players::Human.new(token: X)
     @computer = Players::Computer.new(token: O, game: self)
     @current_player = @human
@@ -37,11 +30,6 @@ class Game
 
   def start_new_game?
     CommandLine::Display.play_again
-  end
-
-  def self.get_difficulty_level
-    level = CommandLine::Display.difficulty
-    DIFFICULTY_LEVELS[level.to_sym]
   end
 
   # Метод который устанавливает символы игрокам

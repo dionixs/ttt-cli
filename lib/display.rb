@@ -27,7 +27,6 @@ module CommandLine
     end
 
     def self.choose_token(tokens = %w[X O])
-      clear
       prompt.select(
         'Do you want to be X or O?',
         tokens, symbols: { marker: '>' }

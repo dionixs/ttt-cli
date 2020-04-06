@@ -13,10 +13,12 @@ require_relative 'lib/player'
 require_relative 'lib/players/computer'
 require_relative 'lib/players/human'
 require_relative 'lib/judge'
+require_relative 'lib/engine'
 require_relative 'lib/game'
 
 # Cтарт новой игры:
 # - Выводим приветственный текст
+# - Устанавливаем режим игры
 # - Устанавливаем уровень сложности игры
 # - Устанавливаем символы игрокам
 # - Определяем кто ходит первым
