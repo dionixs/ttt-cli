@@ -73,14 +73,14 @@ class Game < Engine
   end
 
   # Метод для переключения на следующего игрока
-  def switch_player
-    case @current_player
-    when @first_player
-      @current_player = @second_player
-    else
-      @current_player = @first_player
-    end
-  end
+  # def switch_player
+  #   case @current_player
+  #   when @first_player
+  #     @current_player = @second_player
+  #   else
+  #     @current_player = @first_player
+  #   end
+  # end
 
   def over?
     draw? || won?

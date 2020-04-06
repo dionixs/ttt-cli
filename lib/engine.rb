@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yaml'
 
 class Engine
@@ -8,16 +10,16 @@ class Engine
   PATH_TO_CONFIG = 'config.yaml'
 
   DIFFICULTY_LEVELS = {
-      easy: RandomAI,
-      medium: MediumAI,
-      hard: HardAI
+    easy: RandomAI,
+    medium: MediumAI,
+    hard: HardAI
   }.freeze
 
   def self.read_from_yaml
-    unless File.exists?(PATH_TO_CONFIG)
+    unless File.exist?(PATH_TO_CONFIG)
       abort "File #{PATH_TO_CONFIG} does not exist!"
     end
-    YAML.load(File.read(PATH_TO_CONFIG))
+    YAML.safe_load(File.read(PATH_TO_CONFIG))
   end
 
   def self.configuration
@@ -25,11 +27,11 @@ class Engine
   end
 
   def self.difficulty_level
-    level = Engine.configuration["difficulty"].to_sym
+    level = Engine.configuration['difficulty'].to_sym
     DIFFICULTY_LEVELS[level]
   end
 
   def self.game_mode
-    Engine.configuration["game_mode"].to_sym
+    Engine.configuration['game_mode'].to_sym
   end
 end
