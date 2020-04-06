@@ -48,11 +48,6 @@ class Board
     empty_cells.filter(&:even?)
   end
 
-  # метод возвращает массив нечетных индексов клеток доски
-  def odd_cells
-    empty_cells.filter(&:odd?)
-  end
-
   # метод для очистки клетки
   def reset_cell(index)
     @cells[index] = DASH

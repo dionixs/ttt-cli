@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rainbow'
 require 'tty-prompt'
 
@@ -19,21 +21,21 @@ module CommandLine
     def self.difficulty
       levels = %w[easy medium hard]
       prompt.select(
-          'Select a difficulty level:',
-          levels, symbols: {marker: '>'}
+        'Select a difficulty level:',
+        levels, symbols: { marker: '>' }
       )
     end
 
     def self.choose_token(tokens = %w[X O])
       clear
       prompt.select(
-          'Do you want to be X or O?',
-          tokens, symbols: {marker: '>'}
+        'Do you want to be X or O?',
+        tokens, symbols: { marker: '>' }
       )
     end
 
     def self.choose_cell
-      prompt.ask("What is your move? (1-9):") do |q|
+      prompt.ask('What is your move? (1-9):') do |q|
         q.in '1-9'
         q.messages[:range?] = "Oops! Sorry, that wasn't a valid response. Try again!"
       end
