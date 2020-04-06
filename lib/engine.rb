@@ -20,9 +20,16 @@ class Engine
     YAML.load(File.read(PATH_TO_CONFIG))
   end
 
+  def self.configuration
+    Engine.read_from_yaml
+  end
+
   def self.difficulty_level
-    data = Game.read_from_yaml
-    level = data["difficulty"].to_sym
+    level = Engine.configuration["difficulty"].to_sym
     DIFFICULTY_LEVELS[level]
+  end
+
+  def self.game_mode
+    Engine.configuration["game_mode"].to_sym
   end
 end

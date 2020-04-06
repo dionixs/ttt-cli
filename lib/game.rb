@@ -4,7 +4,7 @@ require 'yaml'
 
 # Класс Game: Управляет игровым процессом
 class Game < Engine
-  attr_reader :board, :human, :computer, :current_player
+  attr_reader :board, :first_player, :second_player, :current_player
 
   @@draws = 0
   @@wins = 0
@@ -13,6 +13,7 @@ class Game < Engine
   def self.start
     CommandLine::Display.welcome_banner
     new_game = new
+    new_game.update_players!
     new_game.set_players_tokens
     new_game.who_goes_first
     CommandLine::Display.print_board(new_game.board)
@@ -22,9 +23,9 @@ class Game < Engine
   def initialize
     @board = Board.new(self)
     @difficulty = Game.difficulty_level
-    @human = Players::Human.new(token: X)
-    @computer = Players::Computer.new(token: O, game: self)
-    @current_player = @human
+    @first_player = Players::Human.new(token: X)
+    @second_player = Players::Computer.new(token: O, game: self)
+    @current_player = @first_player
     @judge = Judge.new(self)
   end
 
@@ -32,12 +33,28 @@ class Game < Engine
     CommandLine::Display.play_again
   end
 
+  def update_players! # todo
+    if Game.game_mode == :standard
+      @first_player = Players::Human.new(token: X)
+      @second_player = Players::Computer.new(token: O, game: self)
+      @current_player = @first_player
+    elsif Game.game_mode == :single_player
+      @first_player = Players::Human.new(token: X)
+      @second_player = Players::Human.new(token: O)
+      @current_player = @first_player
+    else
+      @first_player = Players::Computer.new(token: X, game: self)
+      @second_player = Players::Computer.new(token: O, game: self)
+      @current_player = @first_player
+    end
+  end
+
   # Метод который устанавливает символы игрокам
   # По умолчанию игрок - X, компьютер - O
   def set_players_tokens
     if get_user_token != 'X'
-      @human.token = O
-      @computer.token = X
+      @first_player.token = O
+      @second_player.token = X
     end
   end
 
@@ -49,19 +66,19 @@ class Game < Engine
   # Метод для выбора игрока, который будет ходить первым.
   # По умолчанию первым ходит игрок.
   def who_goes_first
-    case @human.token
+    case @first_player.token
     when O
-      @current_player = @computer
+      @current_player = @second_player
     end
   end
 
   # Метод для переключения на следующего игрока
   def switch_player
     case @current_player
-    when @human
-      @current_player = @computer
+    when @first_player
+      @current_player = @second_player
     else
-      @current_player = @human
+      @current_player = @first_player
     end
   end
 
@@ -83,11 +100,11 @@ class Game < Engine
       @@draws += 1
       CommandLine::Display.print_board(board)
       CommandLine::Display.draw
-    elsif won?(@human)
+    elsif won?(@first_player)
       @@wins += 1
       CommandLine::Display.print_board(board)
       CommandLine::Display.winner
-    elsif won?(@computer)
+    elsif won?(@second_player)
       @@losses += 1
       CommandLine::Display.print_board(board)
       CommandLine::Display.loser

@@ -18,14 +18,6 @@ module CommandLine
       system('clear') || system('cls')
     end
 
-    def self.difficulty
-      levels = %w[easy medium hard]
-      prompt.select(
-        'Select a difficulty level:',
-        levels, symbols: { marker: '>' }
-      )
-    end
-
     def self.choose_token(tokens = %w[X O])
       prompt.select(
         'Do you want to be X or O?',

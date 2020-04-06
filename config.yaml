@@ -1,7 +1,7 @@
 # Игровой режим:
 # - standard: Human vs Computer
 # - single_player: Human vs Human
-# - observer: Computer vs Computer
+# - observer: Computer vs Computer (?)
 game_mode: standard
 # Уровень сложности:
 # - easy

@@ -8,7 +8,7 @@ module Players
       super(params)
       @game = params[:game]
       @board = @game.board
-      @enemy = @game.human
+      @enemy = @game.first_player
       @difficulty = @game.difficulty
       @ai = AI.create(@game, @difficulty, self)
     end

@@ -11,7 +11,7 @@ class AI
     @game = game
     @board = game.board
     @computer = computer
-    @enemy = @game.human
+    @enemy = @game.first_player
     @best_move = nil
   end
 
