@@ -8,6 +8,11 @@ GEM
       equatable (~> 0.6)
       tty-color (~> 0.5)
     rainbow (3.0.0)
+    strings (0.1.8)
+      strings-ansi (~> 0.1)
+      unicode-display_width (~> 1.5)
+      unicode_utils (~> 1.4)
+    strings-ansi (0.2.0)
     tty-color (0.5.1)
     tty-cursor (0.7.1)
     tty-prompt (0.20.0)
@@ -19,6 +24,14 @@ GEM
       tty-screen (~> 0.7)
       wisper (~> 2.0.0)
     tty-screen (0.7.1)
+    tty-table (0.11.0)
+      equatable (~> 0.6)
+      necromancer (~> 0.5)
+      pastel (~> 0.7.2)
+      strings (~> 0.1.5)
+      tty-screen (~> 0.7)
+    unicode-display_width (1.7.0)
+    unicode_utils (1.4.0)
     wisper (2.0.1)
 
 PLATFORMS
@@ -28,6 +41,7 @@ DEPENDENCIES
   byebug
   rainbow
   tty-prompt
+  tty-table
 
 BUNDLED WITH
    2.1.2

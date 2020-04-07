@@ -7,6 +7,7 @@ require 'rainbow'
 # По умолчанию имеет размер 3х3.
 class Board
   attr_accessor :cells
+  attr_reader :game
 
   include Emoji
 
@@ -55,10 +56,6 @@ class Board
 
   def to_s
     Rainbow("
-    +---------------+
-    |  Tic-Tac-Toe  |
-    +---------------+
-
         |      |
     #{@cells[0]}  |  #{@cells[1]}  |  #{@cells[2]}
   ______|______|______
@@ -68,9 +65,6 @@ class Board
         |      |
     #{@cells[6]}  |  #{@cells[7]}  |  #{@cells[8]}
         |      |
-
-  Human   Tie   Computer
-    #{@game.wins}      #{@game.draws}       #{@game.losses}
-    ").lawngreen
+").lawngreen
   end
 end
