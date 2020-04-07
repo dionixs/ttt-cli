@@ -2,6 +2,12 @@
 
 module Players
   class Human < Player
+    def initialize(params)
+      super(params)
+      @name = params[:name]
+      @name = "Human" if !params[:name]
+    end
+
     def make_move(board)
       move = position
       if !board.cell_taken?(move)

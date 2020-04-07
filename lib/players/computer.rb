@@ -6,6 +6,7 @@ module Players
 
     def initialize(params)
       super(params)
+      @name = "Computer"
       @game = params[:game]
       @board = @game.board
       @enemy = @game.first_player
@@ -15,6 +16,7 @@ module Players
 
     def make_move(board)
       move = position
+      sleep 0.5
       board.fill_cell(move, @token) unless board.cell_taken?(move)
     end
 

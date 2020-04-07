@@ -7,10 +7,11 @@ class Player
   include Emoji
 
   def initialize(params)
+    @name = params[:name]
     @token = params[:token]
   end
 
-  def make_move(board); end # todo
+  def make_move(board); end
 
   def position; end
 end
