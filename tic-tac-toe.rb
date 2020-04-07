@@ -47,8 +47,6 @@ loop do
     end
   end
 
-  sleep 0.5
-
   # переключение на следующего игрока
   game.switch_player
 end

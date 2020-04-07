@@ -4,7 +4,8 @@ require 'yaml'
 
 # Класс Game: Управляет игровым процессом
 class Game < Engine
-  attr_reader :board, :first_player, :second_player, :current_player
+  attr_reader :board, :first_player, :second_player,
+              :current_player, :game_mode
 
   @@draws = 0
   @@wins = 0
@@ -12,17 +13,28 @@ class Game < Engine
 
   def self.start
     CommandLine::Display.welcome_banner
-    new_game = new
-    new_game.update_players!
-    new_game.set_players_tokens
-    new_game.who_goes_first
-    CommandLine::Display.print_board(new_game.board)
+    Game.setup_game(new_game = new)
     new_game
+  end
+
+  def self.setup_game(game)
+    game.update_players!
+    Game.set_difficulty(game)
+    game.set_players_tokens
+    game.who_goes_first
+    CommandLine::Display.print_board(game.board)
+  end
+
+  def self.set_difficulty(game)
+    if game.game_mode != :singleplayer
+      game.difficulty = Game.difficulty_level
+    end
   end
 
   def initialize
     @board = Board.new(self)
-    @difficulty = Game.difficulty_level
+    @difficulty = HardAI
+    @game_mode = :multiplayer
     @first_player = Players::Human.new(token: X)
     @second_player = Players::Computer.new(token: O, game: self)
     @current_player = @first_player
@@ -33,20 +45,28 @@ class Game < Engine
     CommandLine::Display.play_again
   end
 
-  def update_players! # todo
-    if Game.game_mode == :standard
-      @first_player = Players::Human.new(token: X)
-      @second_player = Players::Computer.new(token: O, game: self)
-      @current_player = @first_player
-    elsif Game.game_mode == :single_player
-      @first_player = Players::Human.new(token: X)
-      @second_player = Players::Human.new(token: O)
-      @current_player = @first_player
+  def update_players!
+    if is_multiplayer?
+      @game_mode = :multiplayer
+      multiplayer_mode
     else
-      @first_player = Players::Computer.new(token: X, game: self)
-      @second_player = Players::Computer.new(token: O, game: self)
-      @current_player = @first_player
+      @game_mode = :singleplayer
+      singleplayer_mode
     end
+  end
+
+  def is_multiplayer?
+    Game.game_mode == :multiplayer
+  end
+
+  def multiplayer_mode
+    @second_player = Players::Computer.new(token: O, game: self)
+  end
+
+  def singleplayer_mode
+    @first_player = Players::Human.new(token: X, name: "Player 1")
+    @second_player = Players::Human.new(token: O, name: "Player 2")
+    @current_player = @first_player
   end
 
   # Метод который устанавливает символы игрокам
@@ -73,14 +93,14 @@ class Game < Engine
   end
 
   # Метод для переключения на следующего игрока
-  # def switch_player
-  #   case @current_player
-  #   when @first_player
-  #     @current_player = @second_player
-  #   else
-  #     @current_player = @first_player
-  #   end
-  # end
+  def switch_player
+    case @current_player
+    when @first_player
+      @current_player = @second_player
+    else
+      @current_player = @first_player
+    end
+  end
 
   def over?
     draw? || won?

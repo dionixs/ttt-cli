@@ -2,6 +2,7 @@
 
 require 'rainbow'
 require 'tty-prompt'
+require 'tty-table'
 
 module CommandLine
   class Display
@@ -16,6 +17,22 @@ module CommandLine
 
     def self.clear
       system('clear') || system('cls')
+    end
+
+    def self.difficulty
+      levels = %w[easy medium hard]
+      prompt.select(
+        'Select a difficulty level:',
+        levels, symbols: { marker: '>' }
+      )
+    end
+
+    def self.game_mode
+      modes = %w[multiplayer singleplayer]
+      prompt.select(
+        'Choose game mode:',
+        modes, symbols: { marker: '>' }
+      )
     end
 
     def self.choose_token(tokens = %w[X O])
@@ -48,9 +65,27 @@ module CommandLine
       puts Rainbow("\tYou Lose!\n").red
     end
 
+    def self.logo
+      "
+    ┌───────────────┐
+    │  Tic-Tac-Toe  │
+    └───────────────┘"
+    end
+
+    def self.scoreboard(game)
+      table = TTY::Table.new [game.first_player.name, "  Tie  ", game.second_player.name],
+                             [[game.wins, game.draws, game.losses]
+                             ]
+      scoreboard = table.render :unicode, alignment: [:center]
+      puts Rainbow(scoreboard).lawngreen
+      puts
+    end
+
     def self.print_board(board)
       system('clear') || system('cls')
+      puts Rainbow(logo).lawngreen
       puts board
+      scoreboard(board.game)
     end
   end
 end
