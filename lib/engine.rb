@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-require 'yaml'
-
 class Engine
   attr_accessor :difficulty
 
   @@game_mode = :multiplayer
+
+  @@draws = 0
+  @@wins = 0
+  @@losses = 0
 
   include Emoji
 
@@ -18,8 +20,10 @@ class Engine
   def self.set_game_mode
     if Engine.is_multiplayer?
       @@game_mode = :multiplayer
+      Engine.reset_counters
     else
       @@game_mode = :singleplayer
+      Engine.reset_counters
     end
   end
 
@@ -45,7 +49,23 @@ class Engine
     DIFFICULTY_LEVELS[level.to_sym]
   end
 
+  def self.reset_counters
+    @@draws, @@losses, @@wins = 0, 0, 0
+  end
+
   def game_mode
     @@game_mode
+  end
+
+  def wins
+    @@wins
+  end
+
+  def draws
+    @@draws
+  end
+
+  def losses
+    @@losses
   end
 end

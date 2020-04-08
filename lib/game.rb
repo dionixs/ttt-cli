@@ -1,15 +1,9 @@
 # frozen_string_literal: true
 
-require 'yaml'
-
 # Класс Game: Управляет игровым процессом
 class Game < Engine
   attr_reader :board, :first_player, :second_player,
               :current_player
-
-  @@draws = 0
-  @@wins = 0
-  @@losses = 0
 
   def self.start
     CommandLine::Display.welcome_banner
@@ -118,17 +112,5 @@ class Game < Engine
       CommandLine::Display.print_board(board)
       CommandLine::Display.loser
     end
-  end
-
-  def wins
-    @@wins
-  end
-
-  def draws
-    @@draws
-  end
-
-  def losses
-    @@losses
   end
 end
