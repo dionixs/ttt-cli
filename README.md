@@ -1,4 +1,7 @@
 # Tic-Tac-Toe
+<p align="center">
+  <img width="600" height="200" src="image.png">
+</p>
 Консольная реализация игры "Крестики-нолики".
 
 # Run
