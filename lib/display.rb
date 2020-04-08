@@ -82,7 +82,7 @@ module CommandLine
     end
 
     def self.print_board(board)
-      system('clear') || system('cls')
+      clear
       puts Rainbow(logo).lawngreen
       puts board
       scoreboard(board.game)
