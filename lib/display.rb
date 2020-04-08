@@ -28,7 +28,7 @@ module CommandLine
     end
 
     def self.game_mode
-      modes = %w[multiplayer singleplayer]
+      modes = %w[singleplayer hotseat]
       prompt.select(
         'Choose game mode:',
         modes, symbols: { marker: '>' }
@@ -50,7 +50,7 @@ module CommandLine
     end
 
     def self.winner(game)
-      if game.game_mode == :multiplayer
+      if game.game_mode == :singleplayer
         puts Rainbow("\tYou Win!\n").deepskyblue
       else
         puts Rainbow("#{game.current_player.name} has won the game!\n").deepskyblue
@@ -66,7 +66,7 @@ module CommandLine
     end
 
     def self.loser(game)
-      if game.game_mode == :multiplayer
+      if game.game_mode == :singleplayer
         puts Rainbow("\tYou Lose!\n").red
       else
         winner(game)

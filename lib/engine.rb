@@ -3,7 +3,7 @@
 class Engine
   attr_accessor :difficulty
 
-  @@game_mode = :multiplayer
+  @@game_mode = :singleplayer
 
   @@draws = 0
   @@wins = 0
@@ -18,21 +18,21 @@ class Engine
   }.freeze
 
   def self.set_game_mode
-    if Engine.is_multiplayer?
-      Engine.reset_counters if @@game_mode == :singleplayer
-      @@game_mode = :multiplayer
-    else
-      Engine.reset_counters if @@game_mode == :multiplayer
+    if Engine.is_singleplayer?
+      Engine.reset_counters if @@game_mode == :hotseat
       @@game_mode = :singleplayer
+    else
+      Engine.reset_counters if @@game_mode == :singleplayer
+      @@game_mode = :hotseat
     end
   end
 
-  def self.is_multiplayer?
-    Engine.game_mode == :multiplayer
+  def self.is_singleplayer?
+    Engine.game_mode == :singleplayer
   end
 
   def self.set_difficulty
-    if @@game_mode != :singleplayer
+    if @@game_mode != :hotseat
       Engine.difficulty_level
     else
       RandomAI

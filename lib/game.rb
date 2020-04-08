@@ -33,18 +33,18 @@ class Game < Engine
   end
 
   def update_players!
-    if @@game_mode == :multiplayer
-      multiplayer_mode
-    else
+    if @@game_mode == :singleplayer
       singleplayer_mode
+    else
+      hotseat_mode
     end
   end
 
-  def multiplayer_mode
+  def singleplayer_mode
     @second_player = Players::Computer.new(token: O, game: self)
   end
 
-  def singleplayer_mode
+  def hotseat_mode
     @first_player = Players::Human.new(token: X, name: "Player 1")
     @second_player = Players::Human.new(token: O, name: "Player 2")
     @current_player = @first_player
@@ -53,7 +53,7 @@ class Game < Engine
   # Метод который устанавливает символы игрокам
   # По умолчанию игрок - X, компьютер - O
   def set_players_tokens
-    if @@game_mode == :multiplayer
+    if @@game_mode == :singleplayer
       if get_user_token != 'X'
         @first_player.token = O
         @second_player.token = X
