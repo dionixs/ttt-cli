@@ -19,11 +19,11 @@ class Engine
 
   def self.set_game_mode
     if Engine.is_multiplayer?
+      Engine.reset_counters
       @@game_mode = :multiplayer
-      Engine.reset_counters
     else
-      @@game_mode = :singleplayer
       Engine.reset_counters
+      @@game_mode = :singleplayer
     end
   end
 
@@ -50,7 +50,11 @@ class Engine
   end
 
   def self.reset_counters
-    @@draws, @@losses, @@wins = 0, 0, 0
+    if @@game_mode == :singleplayer
+      @@draws, @@losses, @@wins = 0, 0, 0
+    else @@game_mode == :multiplayer
+      @@draws, @@losses, @@wins = 0, 0, 0
+    end
   end
 
   def game_mode

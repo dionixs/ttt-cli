@@ -73,9 +73,8 @@ module CommandLine
     end
 
     def self.scoreboard(game)
-      table = TTY::Table.new [game.first_player.name, "  Tie  ", game.second_player.name],
-                             [[game.wins, game.draws, game.losses]
-                             ]
+      table = TTY::Table.new [game.first_player.name, '  Tie  ', game.second_player.name],
+                             [[game.wins, game.draws, game.losses]]
       scoreboard = table.render :unicode, alignment: [:center]
       puts Rainbow(scoreboard).lawngreen
       puts
