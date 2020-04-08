@@ -108,9 +108,9 @@ class Game < Engine
     if draw?
       CommandLine::Display.draw
     elsif won?(@first_player)
-      CommandLine::Display.winner
+      CommandLine::Display.winner(self)
     elsif won?(@second_player)
-      CommandLine::Display.loser
+      CommandLine::Display.loser(self)
     end
   end
 

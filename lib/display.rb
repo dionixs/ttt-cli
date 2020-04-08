@@ -49,8 +49,12 @@ module CommandLine
       end
     end
 
-    def self.winner
-      puts Rainbow("\tYou Win!\n").deepskyblue
+    def self.winner(game)
+      if game.game_mode == :multiplayer
+        puts Rainbow("\tYou Win!\n").deepskyblue
+      else
+        puts Rainbow("#{game.current_player.name} has won the game!\n").deepskyblue
+      end
     end
 
     def self.draw
@@ -61,8 +65,12 @@ module CommandLine
       prompt.yes?('Would you to play again?')
     end
 
-    def self.loser
-      puts Rainbow("\tYou Lose!\n").red
+    def self.loser(game)
+      if game.game_mode == :multiplayer
+        puts Rainbow("\tYou Lose!\n").red
+      else
+        winner(game)
+      end
     end
 
     def self.logo
