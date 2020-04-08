@@ -20,8 +20,7 @@ module Players
     private
 
     def position
-      index = CommandLine::Display.choose_cell
-      index.to_i - 1
+    CommandLine::Display.choose_cell
     end
   end
 end
