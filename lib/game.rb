@@ -5,7 +5,7 @@ require 'yaml'
 # Класс Game: Управляет игровым процессом
 class Game < Engine
   attr_reader :board, :first_player, :second_player,
-              :current_player, :game_mode
+              :current_player
 
   @@draws = 0
   @@wins = 0
@@ -13,28 +13,21 @@ class Game < Engine
 
   def self.start
     CommandLine::Display.welcome_banner
+    Game.set_game_mode
     Game.setup_game(new_game = new)
-    new_game
   end
 
   def self.setup_game(game)
     game.update_players!
-    Game.set_difficulty(game)
     game.set_players_tokens
     game.who_goes_first
     CommandLine::Display.print_board(game.board)
-  end
-
-  def self.set_difficulty(game)
-    if game.game_mode != :singleplayer
-      game.difficulty = Game.difficulty_level
-    end
+    game
   end
 
   def initialize
     @board = Board.new(self)
-    @difficulty = HardAI
-    @game_mode = :multiplayer
+    @difficulty = Game.set_difficulty
     @first_player = Players::Human.new(token: X)
     @second_player = Players::Computer.new(token: O, game: self)
     @current_player = @first_player
@@ -46,17 +39,11 @@ class Game < Engine
   end
 
   def update_players!
-    if is_multiplayer?
-      @game_mode = :multiplayer
+    if @@game_mode == :multiplayer
       multiplayer_mode
     else
-      @game_mode = :singleplayer
       singleplayer_mode
     end
-  end
-
-  def is_multiplayer?
-    Game.game_mode == :multiplayer
   end
 
   def multiplayer_mode
@@ -72,9 +59,11 @@ class Game < Engine
   # Метод который устанавливает символы игрокам
   # По умолчанию игрок - X, компьютер - O
   def set_players_tokens
-    if get_user_token != 'X'
-      @first_player.token = O
-      @second_player.token = X
+    if @@game_mode == :multiplayer
+      if get_user_token != 'X'
+        @first_player.token = O
+        @second_player.token = X
+      end
     end
   end
 
