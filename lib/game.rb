@@ -97,20 +97,30 @@ class Game < Engine
     @judge.is_combo?(player)
   end
 
+  def over_message
+    increase_counter
+    CommandLine::Display.print_board(@board)
+    print_winner
+  end
+
   # Метод для объявления победителя
-  def over_message # todo
+  def print_winner
     if draw?
-      @@draws += 1
-      CommandLine::Display.print_board(board)
       CommandLine::Display.draw
     elsif won?(@first_player)
-      @@wins += 1
-      CommandLine::Display.print_board(board)
       CommandLine::Display.winner
     elsif won?(@second_player)
-      @@losses += 1
-      CommandLine::Display.print_board(board)
       CommandLine::Display.loser
+    end
+  end
+
+  def increase_counter
+    if draw?
+      @@draws += 1
+    elsif won?(@first_player)
+      @@wins += 1
+    elsif won?(@second_player)
+      @@losses += 1
     end
   end
 end
