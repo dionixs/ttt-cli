@@ -6,7 +6,7 @@ module Players
 
     def initialize(params)
       super(params)
-      @name = "Computer"
+      @name = 'Computer'
       @game = params[:game]
       @board = @game.board
       @enemy = @game.first_player

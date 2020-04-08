@@ -12,9 +12,9 @@ class Engine
   include Emoji
 
   DIFFICULTY_LEVELS = {
-      easy: RandomAI,
-      medium: MediumAI,
-      hard: HardAI
+    easy: RandomAI,
+    medium: MediumAI,
+    hard: HardAI
   }.freeze
 
   def self.set_game_mode
@@ -50,7 +50,9 @@ class Engine
   end
 
   def self.reset_counters
-    @@draws, @@losses, @@wins = 0, 0, 0
+    @@draws = 0
+    @@losses = 0
+    @@wins = 0
   end
 
   def game_mode

@@ -45,8 +45,8 @@ class Game < Engine
   end
 
   def hotseat_mode
-    @first_player = Players::Human.new(token: X, name: "Player 1")
-    @second_player = Players::Human.new(token: O, name: "Player 2")
+    @first_player = Players::Human.new(token: X, name: 'Player 1')
+    @second_player = Players::Human.new(token: O, name: 'Player 2')
     @current_player = @first_player
   end
 

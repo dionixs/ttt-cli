@@ -22,30 +22,30 @@ module CommandLine
     def self.difficulty
       levels = %w[easy medium hard]
       prompt.select(
-          'Select a difficulty level:',
-          levels, symbols: {marker: '>'}
+        'Select a difficulty level:',
+        levels, symbols: { marker: '>' }
       )
     end
 
     def self.game_mode
       modes = %w[singleplayer hotseat]
       prompt.select(
-          'Choose game mode:',
-          modes, symbols: {marker: '>'}
+        'Choose game mode:',
+        modes, symbols: { marker: '>' }
       )
     end
 
     def self.choose_token(tokens = %w[X O])
       prompt.select(
-          'Do you want to be X or O?',
-          tokens, symbols: {marker: '>'}
+        'Do you want to be X or O?',
+        tokens, symbols: { marker: '>' }
       )
     end
 
     def self.choose_cell(choice = nil)
-      moves = Array(1..9).map { |item| item.to_s}
+      moves = Array(1..9).map(&:to_s)
       while !moves.include?(choice) && choice != 'exit'
-        print Rainbow("What is your move? (1-9): ").lawngreen
+        print Rainbow('What is your move? (1-9): ').lawngreen
         choice = STDIN.gets.strip
       end
       exit if choice == 'exit'

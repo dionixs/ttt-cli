@@ -5,7 +5,7 @@ module Players
     def initialize(params)
       super(params)
       @name = params[:name]
-      @name = "Human" if !params[:name]
+      @name = 'Human' unless params[:name]
     end
 
     def make_move(board)
@@ -20,7 +20,7 @@ module Players
     private
 
     def position
-    CommandLine::Display.choose_cell
+      CommandLine::Display.choose_cell
     end
   end
 end
