@@ -17,8 +17,8 @@ class Engine
     hard: HardAI
   }.freeze
 
-  def self.set_game_mode
-    if Engine.is_singleplayer?
+  def self.set_game_mode(mode)
+    if Engine.is_singleplayer?(mode)
       Engine.reset_counters if @@game_mode == :hotseat
       @@game_mode = :singleplayer
     else
@@ -27,15 +27,13 @@ class Engine
     end
   end
 
-  def self.is_singleplayer?
-    Engine.game_mode == :singleplayer
+  def self.is_singleplayer?(mode)
+    mode == :singleplayer
   end
 
   def self.set_difficulty
     if @@game_mode != :hotseat
       Engine.difficulty_level
-    else
-      RandomAI
     end
   end
 

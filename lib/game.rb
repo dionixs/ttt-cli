@@ -7,8 +7,8 @@ class Game < Engine
 
   def self.start
     CommandLine::Display.welcome_banner
-    Game.set_game_mode
-    Game.setup_game(new_game = new)
+    Game.set_game_mode(Game.game_mode)
+    Game.setup_game(new(Game.set_difficulty))
   end
 
   def self.setup_game(game)
@@ -19,9 +19,9 @@ class Game < Engine
     game
   end
 
-  def initialize
+  def initialize(difficulty = HardAI)
     @board = Board.new(self)
-    @difficulty = Game.set_difficulty
+    @difficulty = difficulty
     @first_player = Players::Human.new(token: X)
     @second_player = Players::Computer.new(token: O, game: self)
     @current_player = @first_player
