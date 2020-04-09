@@ -3,6 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'byebug'
+gem 'rspec'
 gem 'rainbow'
 gem 'tty-prompt'
 gem 'tty-table'
