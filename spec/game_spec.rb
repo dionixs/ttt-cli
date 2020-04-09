@@ -49,6 +49,24 @@ describe Game do
     expect(first_player).to eq Players::Human
     expect(second_player).to eq Players::Human
   end
+
+  it 'easy level' do
+    Game.set_game_mode(:singleplayer)
+    game = Game.new(RandomAI)
+    expect(game.difficulty).to eq RandomAI
+  end
+
+  it 'medium level' do
+    Game.set_game_mode(:singleplayer)
+    game = Game.new(MediumAI)
+    expect(game.difficulty).to eq MediumAI
+  end
+
+  it 'hard level' do
+    Game.set_game_mode(:singleplayer)
+    game = Game.new(HardAI)
+    expect(game.difficulty).to eq HardAI
+  end
 end
 
 

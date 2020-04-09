@@ -34,6 +34,8 @@ class Engine
   def self.set_difficulty
     if @@game_mode != :hotseat
       Engine.difficulty_level
+    else
+      HardAI
     end
   end
 
