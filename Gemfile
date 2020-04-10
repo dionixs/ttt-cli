@@ -2,8 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'byebug'
-gem 'rspec'
-gem 'rainbow'
-gem 'tty-prompt'
-gem 'tty-table'
+# Specify your gem's dependencies in crop_tracker.gemspec
+gemspec
+
+gem 'rspec', require: 'spec'

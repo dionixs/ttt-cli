@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+
+require_relative 'ttt-cli/version'
+require_relative 'ttt-cli/emoji'
+require_relative 'ttt-cli/display'
+require_relative 'ttt-cli/board'
+require_relative 'ttt-cli/ai'
+require_relative 'ttt-cli/strategies/random_ai'
+require_relative 'ttt-cli/strategies/medium_ai'
+require_relative 'ttt-cli/strategies/hard_ai'
+require_relative 'ttt-cli/player'
+require_relative 'ttt-cli/players/computer'
+require_relative 'ttt-cli/players/human'
+require_relative 'ttt-cli/judge'
+require_relative 'ttt-cli/engine'
+require_relative 'ttt-cli/game'
