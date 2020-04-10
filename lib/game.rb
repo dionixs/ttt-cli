@@ -2,18 +2,20 @@
 
 # Класс Game: Управляет игровым процессом
 class Game < Engine
-  attr_reader :board, :first_player, :second_player,
-              :current_player
+  attr_accessor :first_player, :second_player,
+                :current_player, :judge
+  attr_reader :board
 
   def self.start
     CommandLine::Display.welcome_banner
     Game.set_game_mode(Game.game_mode)
-    Game.setup_game(new(Game.set_difficulty))
+    new_game = new(Game.set_difficulty)
+    Game.setup_game(new_game)
   end
 
   def self.setup_game(game)
     game.update_players!
-    game.set_players_tokens
+    game.set_players_tokens(CommandLine::Display.user_token)
     game.who_goes_first
     CommandLine::Display.print_board(game.board)
     game
@@ -52,18 +54,13 @@ class Game < Engine
 
   # Метод который устанавливает символы игрокам
   # По умолчанию игрок - X, компьютер - O
-  def set_players_tokens
+  def set_players_tokens(token)
     if @@game_mode == :singleplayer
-      if get_user_token != 'X'
+      if token != 'X'
         @first_player.token = O
         @second_player.token = X
       end
     end
-  end
-
-  # Метод для получения символа игрока
-  def get_user_token
-    CommandLine::Display.choose_token
   end
 
   # Метод для выбора игрока, который будет ходить первым.

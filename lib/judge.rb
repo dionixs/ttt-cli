@@ -2,7 +2,7 @@
 
 # Класс Judge - судья (проверщик).
 class Judge
-  attr_reader :board
+  attr_accessor :board
 
   WIN_COMBINATIONS = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -17,20 +17,20 @@ class Judge
   # основной метод для проверки на выигрыш
   # возвращает true если обнаружена выигрышная комбинация
   def is_combo?(player)
-    !winning_combination(player).nil?
+    !winning_combination(player.token).nil?
   end
 
   private
 
   # метод который возвращает первую подходящую комбинацию
   # или nil если не было совпадения
-  def winning_combination(player)
+  def winning_combination(token)
     WIN_COMBINATIONS.find do |indices|
       # возвращаем значения для соответствующих индексов
       # values_at(*[0,1,2]) => values_at(0,1,2)
       values = @board.values_at(*indices)
       # проверяем, равны ли все значения X или O
-      values.all?(player.token)
+      values.all?(token)
     end
   end
 end
