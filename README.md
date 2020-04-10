@@ -15,7 +15,7 @@
 Установка пакета  `tty-cli` из [Rubygems](https://rubygems.org/gems/ttt-cli):
 
 ```
-gem install ttt-cli
+$> gem install ttt-cli
 ```
 
 ## Запуск
@@ -27,7 +27,7 @@ $> ttt-cli
 ## Тесты
 
 ```bash
-bundle exec rake spec
+$> bundle exec rake spec
 ```
 
 ## Ресурсы
