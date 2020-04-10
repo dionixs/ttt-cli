@@ -2,6 +2,8 @@
 
 Консольная реализация игры: "**Крестики-нолики**".
 
+![](/home/hackerman/projects/ttt-cli/image.png)
+
 Особенности: 
 
 - 2 игровых режима: **Single-player**, **Hot-seat**.
