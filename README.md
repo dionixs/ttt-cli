@@ -2,7 +2,7 @@
 
 Консольная реализация игры: "**Крестики-нолики**".
 
-![](/home/hackerman/projects/ttt-cli/image.png)
+![](https://raw.githubusercontent.com/dionixs/ttt-cli/master/image.png)
 
 Особенности: 
 
