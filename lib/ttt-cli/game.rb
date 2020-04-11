@@ -15,13 +15,13 @@ class Game < Engine
 
   def self.setup_game(game)
     game.update_players!
-    game.set_players_tokens(CommandLine::Display.user_token)
+    game.set_players_tokens(game.get_user_token)
     game.who_goes_first
     CommandLine::Display.print_board(game.board)
     game
   end
 
-  def initialize(difficulty = HardAI)
+  def initialize(difficulty = MediumAI)
     @board = Board.new(self)
     @difficulty = difficulty
     @first_player = Players::Human.new(token: X)
@@ -37,8 +37,10 @@ class Game < Engine
   def update_players!
     if @@game_mode == :singleplayer
       singleplayer_mode
-    else
+    elsif @@game_mode == :hotseat
       hotseat_mode
+    else
+      observer_mode
     end
   end
 
@@ -50,6 +52,18 @@ class Game < Engine
     @first_player = Players::Human.new(token: X, name: 'Player 1')
     @second_player = Players::Human.new(token: O, name: 'Player 2')
     @current_player = @first_player
+  end
+
+  def observer_mode
+    @first_player = Players::Computer.new(token: X, name: 'Connor', game: self)
+    @second_player = Players::Computer.new(token: O, name: 'William', game: self)
+    @current_player = @first_player
+  end
+
+  def get_user_token
+    if @@game_mode == :singleplayer
+      CommandLine::Display.user_token
+    end
   end
 
   # Метод который устанавливает символы игрокам

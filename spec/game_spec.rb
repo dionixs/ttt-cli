@@ -17,6 +17,12 @@ describe Game do
     expect(game.game_mode).to eq :hotseat
   end
 
+  it 'observer game mode' do
+    Game.set_game_mode(:observer)
+    game = Game.new
+    expect(game.game_mode).to eq :observer
+  end
+
   it 'players for singleplayer mode' do
     Game.set_game_mode(:singleplayer)
     game = Game.new
@@ -24,9 +30,11 @@ describe Game do
 
     first_player = game.first_player.class
     second_player = game.second_player.class
+    current_player = game.current_player.class
 
     expect(first_player).to eq Players::Human
     expect(second_player).to eq Players::Computer
+    expect(current_player).to eq Players::Human
   end
 
   it 'players for hotseat mode' do
@@ -36,9 +44,25 @@ describe Game do
 
     first_player = game.first_player.class
     second_player = game.second_player.class
+    current_player = game.current_player.class
 
     expect(first_player).to eq Players::Human
     expect(second_player).to eq Players::Human
+    expect(current_player).to eq Players::Human
+  end
+
+  it 'players for observer mode' do
+    Game.set_game_mode(:observer)
+    game = Game.new
+    game.update_players!
+
+    first_player = game.first_player.class
+    second_player = game.second_player.class
+    current_player = game.current_player.class
+
+    expect(first_player).to eq Players::Computer
+    expect(second_player).to eq Players::Computer
+    expect(current_player).to eq Players::Computer
   end
 
   it 'easy level' do

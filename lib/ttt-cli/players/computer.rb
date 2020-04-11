@@ -6,17 +6,17 @@ module Players
 
     def initialize(params)
       super(params)
-      @name = 'Computer'
+      @name = 'Computer' unless params[:name]
       @game = params[:game]
       @board = @game.board
-      @enemy = @game.first_player
+      @enemy = @game.first_player unless params[:enemy]
       @difficulty = @game.difficulty
       @ai = AI.create(@game, @difficulty, self)
     end
 
     def make_move(board)
       move = position
-      sleep 0.5
+      sleep 0.6
       board.fill_cell(move, @token) unless board.cell_taken?(move)
     end
 

@@ -17,13 +17,16 @@ class Engine
     hard: HardAI
   }.freeze
 
-  def self.set_game_mode(mode)
+  def self.set_game_mode(mode) # todo
     if Engine.is_singleplayer?(mode)
-      Engine.reset_counters if @@game_mode == :hotseat
+      Engine.reset_counters if @@game_mode == :hotseat || @@game_mode == :observer
       @@game_mode = :singleplayer
-    else
-      Engine.reset_counters if @@game_mode == :singleplayer
+    elsif mode == :hotseat
+      Engine.reset_counters if @@game_mode == :singleplayer || @@game_mode == :observer
       @@game_mode = :hotseat
+    else
+      Engine.reset_counters if @@game_mode == :singleplayer || @@game_mode == :hotseat
+      @@game_mode = :observer
     end
   end
 
@@ -32,7 +35,7 @@ class Engine
   end
 
   def self.set_difficulty
-    if @@game_mode != :hotseat
+    if @@game_mode == :singleplayer
       Engine.difficulty_level
     else
       HardAI

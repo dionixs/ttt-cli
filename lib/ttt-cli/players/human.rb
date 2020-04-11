@@ -4,7 +4,6 @@ module Players
   class Human < Player
     def initialize(params)
       super(params)
-      @name = params[:name]
       @name = 'Human' unless params[:name]
     end
 

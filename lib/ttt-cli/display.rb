@@ -28,7 +28,7 @@ module CommandLine
     end
 
     def self.game_mode
-      modes = %w[singleplayer hotseat]
+      modes = %w[singleplayer hotseat observer]
       prompt.select(
         'Choose game mode:',
         modes, symbols: { marker: '>' }
